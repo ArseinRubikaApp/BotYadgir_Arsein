@@ -2,7 +2,7 @@
 
 
 
-#source yadgire build in team arianbot
+# source yadgire build in team arianbot
 
 
 
@@ -14,15 +14,17 @@ import os.path
 
 import time
 
-from time import sleep,localtime
+from time import sleep, localtime
 
 import os
 
-import re,random
+import re
+
+import random
 
 
 
-#meghdars # version 14
+# meghdars # version 14
 
 
 
@@ -46,15 +48,15 @@ keyp = " "
 
 
 
-app = Messenger(auth,keyp)
+app = Messenger(auth, keyp)
 
 
 
 
 
-limsg , yadDic , readli , messageidjson , GetAdmin , sended , on , removeads , getcheckAds, CHATHISTORY, errorRepleytobot, dastor_bot = [], [], None, [], [], False, True, False, [], False, False, ['/admin','/unadmin','سکوت']
+limsg, yadDic, readli, messageidjson, GetAdmin, sended, on, removeads, getcheckAds, CHATHISTORY, errorRepleytobot, dastor_bot = [
 
-
+], [], None, [], [], False, True, False, [], False, False, ['/admin', '/unadmin', 'سکوت']
 
 
 
@@ -62,1392 +64,1860 @@ limsg , yadDic , readli , messageidjson , GetAdmin , sended , on , removeads , g
 
 while 1:
 
-	try:
+    try:
 
-		se = app.sendMessage(Gap,"با موفقیت فعال شد")["status"]
+        se = app.sendMessage(Gap, "با موفقیت فعال شد")["status"]
 
-		if se == 'OK':
+        if se == 'OK':
 
-			print("starting...")
+            print("starting...")
 
-			if "".join(open("admins.json","r",encoding = "utf-8").read()) == "{}":
+            if "".join(open("admins.json", "r", encoding="utf-8").read()) == "{}":
 
-				GetAdmin = [admin]
+                GetAdmin = [admin]
 
-			elif "".join(open("admins.json","r",encoding = "utf-8").read()) != "{}":
+            elif "".join(open("admins.json", "r", encoding="utf-8").read()) != "{}":
 
-				print("starting...")
+                print("starting...")
 
-				GetAdmin = [guie for guie in loads("".join(open("admins.json","r",encoding = "utf-8").read())).keys()]
+                GetAdmin = [guie for guie in loads(
 
-				GetAdmin.append(admin)
+                    "".join(open("admins.json", "r", encoding="utf-8").read())).keys()]
 
-			break
+                GetAdmin.append(admin)
 
-		else:
+            break
 
-			continue
+        else:
 
-	except FileNotFoundError:
+            continue
 
-		admins = os.path.exists("admins.json")
+    except FileNotFoundError:
 
-		if admins == False:
+        admins = os.path.exists("admins.json")
 
-			open("admins.json","w").write("{}")
+        if admins == False:
 
-			print("starting building admins.json")
+            open("admins.json", "w").write("{}")
 
-		else:...
+            print("starting building admins.json")
+
+        else:
+
+            ...
 
 
 
 while 1:
 
-	try:
+    try:
 
-		message = app.getChatGroup(Gap)
+        message = app.getChatGroup(Gap)
 
-		for msg in message:
+        for msg in message:
 
-			if msg["type"] == 'Text' and not msg['message_id'] in limsg:
+            if msg["type"] == 'Text' and not msg['message_id'] in limsg:
 
-				limsg.append(msg['message_id'])
+                limsg.append(msg['message_id'])
 
 
 
-				if CHATHISTORY == False:
+                if CHATHISTORY == False:
 
-					his = app.deleteChatHistory(Gap,msg['message_id']).get('status')
+                    his = app.deleteChatHistory(
 
-					print('delete chat history' if his == 'OK' else 'error delete chat history')
+                        Gap, msg['message_id']).get('status')
 
-					CHATHISTORY = True
+                    print('delete chat history' if his ==
 
+                          'OK' else 'error delete chat history')
 
+                    CHATHISTORY = True
 
-				print(f"message = {msg['text']}")
 
 
+                print(f"message = {msg['text']}")
 
-				if msg.get("text").startswith("یاد بگیر ") and msg.get("author_object_guid") in GetAdmin and on != False:
 
-					try:
 
-						if "#تبلیغ" in msg.get("text") and not 'reply_to_message_id' in msg.keys():
+                if msg.get("text").startswith("یاد بگیر ") and msg.get("author_object_guid") in GetAdmin and on != False:
 
-							getmatn2 = str(" ".join(msg.get("text").replace("یاد بگیر اگر #تبلیغ","").split(" ")[:]))
+                    try:
 
-							removeads = True
+                        if "#تبلیغ" in msg.get("text") and not 'reply_to_message_id' in msg.keys():
 
-							check = os.path.exists("yad.json")
+                            getmatn2 = str(" ".join(msg.get("text").replace(
 
-							if check == True:
+                                "یاد بگیر اگر #تبلیغ", "").split(" ")[:]))
 
-								readinfo = open("yad.json","r",encoding = "utf-8").read()
+                            removeads = True
 
-								if readinfo == "":
+                            check = os.path.exists("yad.json")
 
-									buildDic = dict({"Remove_ads":f"{getmatn2}"})
+                            if check == True:
 
-									sleep(3)
+                                readinfo = open(
 
-									wri = open("yad.json","w").write(dumps(buildDic))
+                                    "yad.json", "r", encoding="utf-8").read()
 
-									readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                if readinfo == "":
 
-									print("Ok write json")
+                                    buildDic = dict(
 
-									app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                                        {"Remove_ads": f"{getmatn2}"})
 
-									print("Ok yadgire delete message")
+                                    sleep(3)
 
-									sleep(5)
+                                    wri = open("yad.json", "w").write(
 
-								elif readinfo != "":
+                                        dumps(buildDic))
 
-									readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                    readli = loads(
 
-									readli.update(dict({"Remove_ads":f"{getmatn2}"}))
+                                        "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-									print("Ok Update json")
+                                    print("Ok write json")
 
-									wri = open("yad.json","w").write(dumps(readli))
+                                    app.sendMessage(
 
-									readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                        Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-									app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                                    print("Ok yadgire delete message")
 
-									print("Ok yadgire delete message")
+                                    sleep(5)
 
-							else:
+                                elif readinfo != "":
 
-								app.sendMessage(Gap,"در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید",message_id = msg['message_id'])
+                                    readli = loads(
 
-								open("yad.json","w").write("{}")
+                                        "".join(open("yad.json", "r", encoding="utf-8").read()))
 
+                                    readli.update(
 
+                                        dict({"Remove_ads": f"{getmatn2}"}))
 
+                                    print("Ok Update json")
 
+                                    wri = open("yad.json", "w").write(
 
-						elif "#بن" in msg.get("text") and not 'reply_to_message_id' in msg.keys():
+                                        dumps(readli))
 
-							getmatn2 = str(" ".join(msg.get("text").replace("یاد بگیر اگر #بن","").split(" ")[:]))
+                                    readli = loads(
 
-							removeads = True
+                                        "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-							check = os.path.exists("yad.json")
+                                    app.sendMessage(
 
-							if check == True:
+                                        Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-								readinfo = open("yad.json","r",encoding = "utf-8").read()
+                                    print("Ok yadgire delete message")
 
-								if readinfo == "":
+                            else:
 
-									buildDic = dict({"Ban_ads":f"{getmatn2}"})
+                                app.sendMessage(
 
-									sleep(3)
+                                    Gap, "در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید", message_id=msg['message_id'])
 
-									wri = open("yad.json","w").write(dumps(buildDic))
+                                open("yad.json", "w").write("{}")
 
-									readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
 
-									print("Ok write json")
 
-									app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                        elif "#بن" in msg.get("text") and not 'reply_to_message_id' in msg.keys():
 
-									print("Ok yadgire Ban")
+                            getmatn2 = str(" ".join(msg.get("text").replace(
 
-									sleep(5)
+                                "یاد بگیر اگر #بن", "").split(" ")[:]))
 
-								elif readinfo != "":
+                            removeads = True
 
-									readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                            check = os.path.exists("yad.json")
 
-									readli.update(dict({"Ban_ads":f"{getmatn2}"}))
+                            if check == True:
 
-									print("Ok Update json")
+                                readinfo = open(
 
-									wri = open("yad.json","w").write(dumps(readli))
+                                    "yad.json", "r", encoding="utf-8").read()
 
-									readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                if readinfo == "":
 
-									app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                                    buildDic = dict({"Ban_ads": f"{getmatn2}"})
 
-									print("Ok yadgire Ban")
+                                    sleep(3)
 
-							else:
+                                    wri = open("yad.json", "w").write(
 
-								app.sendMessage(Gap,"در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید",message_id = msg['message_id'])
+                                        dumps(buildDic))
 
-								open("yad.json","w").write("{}")
+                                    readli = loads(
 
-							
+                                        "".join(open("yad.json", "r", encoding="utf-8").read()))
 
+                                    print("Ok write json")
 
+                                    app.sendMessage(
 
+                                        Gap, "یاد گرفتم", message_id=msg['message_id'])
 
+                                    print("Ok yadgire Ban")
 
-						elif 'reply_to_message_id' in msg.keys():
+                                    sleep(5)
 
-							msid = msg.get('reply_to_message_id')
+                                elif readinfo != "":
 
-							getType = app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]
+                                    readli = loads(
 
-							if 'Event'  in str(getType['messages'][0]['type']):
+                                        "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-								getmatn1 = str(app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["event_data"]["type"])
+                                    readli.update(
 
-								getmatn2 = str(" ".join(msg.get("text").replace("یاد بگیر ","").split(" ")[:]))
+                                        dict({"Ban_ads": f"{getmatn2}"}))
 
-							elif 'Text' in str(getType['messages'][0]['type']):
+                                    print("Ok Update json")
 
-								getmatn1 = str(app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["text"])
+                                    wri = open("yad.json", "w").write(
 
-								getmatn2 = str(" ".join(msg.get("text").replace("یاد بگیر ","").split(" ")[:]))
+                                        dumps(readli))
 
+                                    readli = loads(
 
+                                        "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-							check = os.path.exists("yad.json")
+                                    app.sendMessage(
 
-							if check == True:
+                                        Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-								if not guid_bot in str(getType['messages'][0]):
+                                    print("Ok yadgire Ban")
 
-									if not getmatn1 in dastor_bot:
+                            else:
 
-										readinfo = open("yad.json","r",encoding = "utf-8").read()
+                                app.sendMessage(
 
-										if readinfo == "":
+                                    Gap, "در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید", message_id=msg['message_id'])
 
-											buildDic = dict({f"{getmatn1}":f"{getmatn2}"})
+                                open("yad.json", "w").write("{}")
 
-											sleep(3)
 
-											wri = open("yad.json","w").write(dumps(buildDic))
 
-											readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                        elif 'reply_to_message_id' in msg.keys():
 
-											print("Ok write json")
+                            msid = msg.get('reply_to_message_id')
 
-											app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                            getType = app.getMessagesInfo(
 
-											print("Ok yadgire")
+                                Gap, [msg.get('reply_to_message_id')])["data"]
 
-											sleep(5)
+                            if 'Event' in str(getType['messages'][0]['type']):
 
-										elif readinfo != "":
+                                getmatn1 = str(app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-											readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                               "data"]["messages"][0]["event_data"]["type"])
 
-											readli.update(dict({f"{getmatn1}":f"{getmatn2}"}))
+                                getmatn2 = str(" ".join(msg.get("text").replace(
 
-											print("Ok Update json")
+                                    "یاد بگیر ", "").split(" ")[:]))
 
-											wri = open("yad.json","w").write(dumps(readli))
+                            elif 'Text' in str(getType['messages'][0]['type']):
 
-											readli = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                getmatn1 = str(app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-											app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                                               "data"]["messages"][0]["text"])
 
-											print("Ok yadgire")
+                                getmatn2 = str(" ".join(msg.get("text").replace(
 
-									else:
+                                    "یاد بگیر ", "").split(" ")[:]))
 
-										app.sendMessage(Gap,"به دستورات اصلی من نمی توانید کلمه یاد دهید 😛",message_id = msg['message_id'])
 
-								else:
 
-									app.sendMessage(Gap,"روی من نمیتونی ریپلای بزنی و دستور یاد بدی 😛",message_id = msg['message_id'])
+                            check = os.path.exists("yad.json")
 
-							else:
+                            if check == True:
 
-								app.sendMessage(Gap,"در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید",message_id = msg['message_id'])
+                                if not guid_bot in str(getType['messages'][0]):
 
-								open("yad.json","w").write("{}")
+                                    if not getmatn1 in dastor_bot:
 
-						else:
+                                        readinfo = open(
 
-							app.sendMessage(Gap,"باید رو کلمه ای که میخوایی یاد بگیرم ریپلای کنی",message_id = msg['message_id'])
+                                            "yad.json", "r", encoding="utf-8").read()
 
-					except:
+                                        if readinfo == "":
 
-						continue
+                                            buildDic = dict(
 
+                                                {f"{getmatn1}": f"{getmatn2}"})
 
+                                            sleep(3)
 
-				elif msg.get("text") in loads("".join(open("yad.json","r",encoding = "utf-8").read())).keys() and not msg['message_id'] in messageidjson and on != False:
+                                            wri = open("yad.json", "w").write(
 
-					try:
+                                                dumps(buildDic))
 
-						if "#ادمین" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                            readli = loads(
 
-							print("1")
+                                                "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-							if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                            print("Ok write json")
 
-								if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی"  or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                            app.sendMessage(
 
-									ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                                                Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-									family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                                            print("Ok yadgire")
 
-									name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                                            sleep(5)
 
-									bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                        elif readinfo != "":
 
-									mtnesm = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#ادمین","").replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                                            readli = loads(
 
-									app.sendMessage(Gap,mtnesm,message_id = msg['message_id'])
+                                                "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-									messageidjson.append(msg['message_id'])
+                                            readli.update(
 
-									print("sended")
+                                                dict({f"{getmatn1}": f"{getmatn2}"}))
 
-								else:
+                                            print("Ok Update json")
 
-									app.sendMessage(Gap,f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}",message_id = msg['message_id'])
+                                            wri = open("yad.json", "w").write(
 
-									messageidjson.append(msg['message_id'])
+                                                dumps(readli))
 
-									print("sended")
+                                            readli = loads(
 
+                                                "".join(open("yad.json", "r", encoding="utf-8").read()))
 
+                                            app.sendMessage(
 
-						elif "#کاربر" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                                Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-							print("2")
+                                            print("Ok yadgire")
 
-							if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                    else:
 
-								if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                        app.sendMessage(
 
-									ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                                            Gap, "به دستورات اصلی من نمی توانید کلمه یاد دهید 😛", message_id=msg['message_id'])
 
-									family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                                else:
 
-									name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                                    app.sendMessage(
 
-									bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                        Gap, "روی من نمیتونی ریپلای بزنی و دستور یاد بدی 😛", message_id=msg['message_id'])
 
-									mtnesm = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#کاربر","").replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                            else:
 
-									app.sendMessage(Gap,mtnesm,message_id = msg['message_id'])
+                                app.sendMessage(
 
-									messageidjson.append(msg['message_id'])
+                                    Gap, "در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید", message_id=msg['message_id'])
 
-									print("sended")
+                                open("yad.json", "w").write("{}")
 
-								else:
+                        else:
 
-									app.sendMessage(Gap,f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}",message_id = msg['message_id'])
+                            app.sendMessage(
 
-									messageidjson.append(msg['message_id'])
+                                Gap, "باید رو کلمه ای که میخوایی یاد بگیرم ریپلای کنی", message_id=msg['message_id'])
 
-									print("sended")
+                    except:
 
-							else:...
+                        continue
 
 
 
-						elif "#رندوم" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                elif msg.get("text") in loads("".join(open("yad.json", "r", encoding="utf-8").read())).keys() and not msg['message_id'] in messageidjson and on != False:
 
-							if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                    try:
 
-								ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                        if "#ادمین" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-								family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                            print("1")
 
-								name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                            if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-								bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-								mtnesm = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#کاربر","").replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                                    ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								matnrendome = re.sub( r"#رندوم\s*((?:'[^']+'(?:,\s*)?)*)", lambda match: random.choice(re.findall(r"'(.*?)'", match.group(1))), mtnesm).replace("'","").replace(",","")
+                                    ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-								app.sendMessage(Gap,matnrendome,message_id = msg['message_id'])
+                                    family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								messageidjson.append(msg['message_id'])
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-								print("sended")
+                                    name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							else:
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
-								mtnesm = loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))
+                                    bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								matnrendome = random.choice(re.findall(r"'(.*?)'", mtnesm))
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-								deletematn = ' '.join(re.sub(r"'.*?'", "", mtnesm).split()).replace("#رندوم",matnrendome).replace(',','')
+                                    mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#ادمین", "").replace("#بیو", bio).replace(
 
-								app.sendMessage(Gap,deletematn,message_id = msg['message_id'])
+                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
-								messageidjson.append(msg['message_id'])
+                                    app.sendMessage(
 
-								print("sended")
+                                        Gap, mtnesm, message_id=msg['message_id'])
 
+                                    messageidjson.append(msg['message_id'])
 
+                                    print("sended")
 
-						else:
+                                else:
 
-							if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                    app.sendMessage(
 
-								ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                                        Gap, f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}", message_id=msg['message_id'])
 
-								family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                                    messageidjson.append(msg['message_id'])
 
-								name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                                    print("sended")
 
-								bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-								mtnesm = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#ساعت", time.strftime("%H : %M : %S",localtime())).replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family).replace("#بیو",bio)
 
-								app.sendMessage(Gap,mtnesm,message_id = msg['message_id'])
+                        elif "#کاربر" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-								messageidjson.append(msg['message_id'])
+                            print("2")
 
-								print("sended")
+                            if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-							else:
+                                if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-								print(":3")
+                                    ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								c = app.sendMessage(Gap,f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}",message_id = msg['message_id'])
+                                    ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-								messageidjson.append(msg['message_id'])
+                                    family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								print(c)
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-								print("sended")
+                                    name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-					except Exception as e:
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
-						print(e)
+                                    bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
+                                    mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
 
-				elif msg.get("text").startswith("پیوی بگو ") and msg.get("author_object_guid") in GetAdmin and on != False:
+                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
-					try:
+                                    app.sendMessage(
 
-						if 'reply_to_message_id' in msg.keys():
+                                        Gap, mtnesm, message_id=msg['message_id'])
 
-							msid = msg.get('reply_to_message_id')
+                                    messageidjson.append(msg['message_id'])
 
-							getType = app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]
+                                    print("sended")
 
-							if 'Event'  in str(getType['messages'][0]['type']):
+                                else:
 
-								getmatn1 = str(app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["event_data"]["type"])
+                                    app.sendMessage(
 
-								getmatn2 = str(" ".join(msg.get("text").replace("پیوی بگو","").split(" ")[:]))
+                                        Gap, f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}", message_id=msg['message_id'])
 
-							elif 'Text' in str(getType['messages'][0]['type']):
+                                    messageidjson.append(msg['message_id'])
 
-								getmatn1 = str(app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["text"])
+                                    print("sended")
 
-								getmatn2 = str(" ".join(msg.get("text").replace("پیوی بگو","").split(" ")[:]))
+                            else:
 
-								print(getmatn2)
+                                ...
 
 
 
-							check = os.path.exists("pv.json")
+                        elif "#رندوم" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-							if check == True:
+                            if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-								if not guid_bot in str(getType['messages'][0]):
+                                ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-									if not getmatn1 in dastor_bot:
+                                ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-										readinfo = open("pv.json","r",encoding = "utf-8").read()
+                                family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-										if readinfo == "":
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-											buildDic = dict({f"{getmatn1}":f"{getmatn2}"})
+                                name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-											sleep(3)
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
-											wri = open("pv.json","w").write(dumps(buildDic))
+                                bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-											readli = loads("".join(open("pv.json","r",encoding = "utf-8").read()))
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-											print("Ok write json")
+                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
 
-											app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                                    "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
-											print("Ok yadgire")
+                                matnrendome = re.sub(r"#رندوم\s*((?:'[^']+'(?:,\s*)?)*)", lambda match: random.choice(
 
-											sleep(5)
+                                    re.findall(r"'(.*?)'", match.group(1))), mtnesm).replace("'", "").replace(",", "")
 
-										elif readinfo != "":
+                                app.sendMessage(
 
-											readli = loads("".join(open("pv.json","r",encoding = "utf-8").read()))
+                                    Gap, matnrendome, message_id=msg['message_id'])
 
-											readli.update(dict({f"{getmatn1}":f"{getmatn2}"}))
+                                messageidjson.append(msg['message_id'])
 
-											print("Ok Update json")
+                                print("sended")
 
-											wri = open("pv.json","w").write(dumps(readli))
+                            else:
 
-											readli = loads("".join(open("pv.json","r",encoding = "utf-8").read()))
+                                mtnesm = loads(
 
-											app.sendMessage(Gap,"یاد گرفتم",message_id = msg['message_id'])
+                                    ''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))
 
-											print("Ok yadgire")
+                                matnrendome = random.choice(
 
-									else:
+                                    re.findall(r"'(.*?)'", mtnesm))
 
-										app.sendMessage(Gap,"به دستورات اصلی من نمی توانید کلمه یاد دهید 😛",message_id = msg['message_id'])
+                                deletematn = ' '.join(re.sub(
 
-								else:
+                                    r"'.*?'", "", mtnesm).split()).replace("#رندوم", matnrendome).replace(',', '')
 
-									app.sendMessage(Gap,"روی من نمیتونی ریپلای بزنی و دستور یاد بدی 😛",message_id = msg['message_id'])
+                                app.sendMessage(
 
-							else:
+                                    Gap, deletematn, message_id=msg['message_id'])
 
-								app.sendMessage(Gap,"در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید",message_id = msg['message_id'])
+                                messageidjson.append(msg['message_id'])
 
-								open("pv.json","w").write("{}")
+                                print("sended")
 
-						else:
 
-							app.sendMessage(Gap,"باید رو کلمه ای که میخوایی یاد بگیرم ریپلای کنی",message_id = msg['message_id'])
 
-					except:
+                        else:
 
-						continue
+                            if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
+                                ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-				elif msg.get("text") in loads("".join(open("pv.json","r",encoding = "utf-8").read())).keys() and not msg['message_id'] in messageidjson and on != False:
+                                family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-					try:
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-						pv = msg.get("author_object_guid")
+                                name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-						if "#ادمین" in str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
-							if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#ساعت"  or "#بیو" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-									ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-									family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                                    "#ساعت", time.strftime("%H : %M : %S", localtime())).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#بیو", bio)
 
-									name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                                app.sendMessage(
 
-									bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                    Gap, mtnesm, message_id=msg['message_id'])
 
-									mtnesm = str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#ادمین","").replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                                messageidjson.append(msg['message_id'])
 
-									app.sendMessage(pv,mtnesm)
+                                print("sended")
 
-									app.sendMessage(Gap,"پیوی خود را چک کنید",message_id = msg.get('message_id'))
+                            else:
 
-									messageidjson.append(msg['message_id'])
+                                print(":3")
 
-									print("sended")
+                                c = app.sendMessage(
 
-								else:
+                                    Gap, f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}", message_id=msg['message_id'])
 
-									app.sendMessage(pv,f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}")
+                                messageidjson.append(msg['message_id'])
 
-									app.sendMessage(Gap,"پیوی خود را چک کنید",message_id = msg.get('message_id'))
+                                print(c)
 
-									messageidjson.append(msg['message_id'])
+                                print("sended")
 
-									print("sended")
+                    except Exception as e:
 
+                        print(e)
 
 
-						elif "#کاربر" in str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
 
-							if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                elif msg.get("text").startswith("پیوی بگو ") and msg.get("author_object_guid") in GetAdmin and on != False:
 
-								if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#ساعت"  or "#بیو" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                    try:
 
-									ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                        if 'reply_to_message_id' in msg.keys():
 
-									family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                            msid = msg.get('reply_to_message_id')
 
-									name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                            getType = app.getMessagesInfo(
 
-									bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                Gap, [msg.get('reply_to_message_id')])["data"]
 
-									mtnesm = str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#کاربر","").replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                            if 'Event' in str(getType['messages'][0]['type']):
 
-									app.sendMessage(pv,mtnesm)
+                                getmatn1 = str(app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-									app.sendMessage(Gap,"پیوی خود را چک کنید",message_id = msg.get('message_id'))
+                                               "data"]["messages"][0]["event_data"]["type"])
 
-									messageidjson.append(msg['message_id'])
+                                getmatn2 = str(
 
-									print("sended")
+                                    " ".join(msg.get("text").replace("پیوی بگو", "").split(" ")[:]))
 
-								else:
+                            elif 'Text' in str(getType['messages'][0]['type']):
 
-									app.sendMessage(pv,f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}")
+                                getmatn1 = str(app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-									app.sendMessage(Gap,"پیوی خود را چک کنید",message_id = msg.get('message_id'))
+                                               "data"]["messages"][0]["text"])
 
-									messageidjson.append(msg['message_id'])
+                                getmatn2 = str(
 
-									print("sended")
+                                    " ".join(msg.get("text").replace("پیوی بگو", "").split(" ")[:]))
 
-							else:...
+                                print(getmatn2)
 
 
 
-						elif "#رندوم" in str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                            check = os.path.exists("pv.json")
 
-							if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                            if check == True:
 
-								ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                                if not guid_bot in str(getType['messages'][0]):
 
-								family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                                    if not getmatn1 in dastor_bot:
 
-								name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                                        readinfo = open(
 
-								bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                            "pv.json", "r", encoding="utf-8").read()
 
-								mtnesm = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#کاربر","").replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                                        if readinfo == "":
 
-								matnrendome = re.sub( r"#رندوم\s*((?:'[^']+'(?:,\s*)?)*)", lambda match: random.choice(re.findall(r"'(.*?)'", match.group(1))), mtnesm).replace("'","").replace(",","")
+                                            buildDic = dict(
 
-								messageidjson.append(msg['message_id'])
+                                                {f"{getmatn1}": f"{getmatn2}"})
 
-								print("sended")
+                                            sleep(3)
 
-							else:
+                                            wri = open("pv.json", "w").write(
 
-								mtnesm = loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))
+                                                dumps(buildDic))
 
-								matnrendome = random.choice(re.findall(r"'(.*?)'", mtnesm))
+                                            readli = loads(
 
-								deletematn = ' '.join(re.sub(r"'.*?'", "", mtnesm).split()).replace("#رندوم",matnrendome).strip(',')
+                                                "".join(open("pv.json", "r", encoding="utf-8").read()))
 
-								app.sendMessage(Gap,deletematn,message_id = msg['message_id'])
+                                            print("Ok write json")
 
-								messageidjson.append(msg['message_id'])
+                                            app.sendMessage(
 
-								print("sended")
+                                                Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-						else:
+                                            print("Ok yadgire")
 
-							if "#اسم"  or "#ایدی" or "#لینک"  or "#گروه" or "#فامیلی" or "#ساعت"  or "#بیو" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('text'))):
+                                            sleep(5)
 
-								ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
+                                        elif readinfo != "":
 
-								family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
+                                            readli = loads(
 
-								name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
+                                                "".join(open("pv.json", "r", encoding="utf-8").read()))
 
-								bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys() else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
+                                            readli.update(
 
-								mtnesm = str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))).replace("#اسم",name).replace("#ایدی",ide).replace("#بیو",bio).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family)
+                                                dict({f"{getmatn1}": f"{getmatn2}"}))
 
-								app.sendMessage(pv,mtnesm)
+                                            print("Ok Update json")
 
-								app.sendMessage(Gap,"پیوی خود را چک کنید",message_id = msg.get('message_id'))
+                                            wri = open("pv.json", "w").write(
 
-								messageidjson.append(msg['message_id'])
+                                                dumps(readli))
 
-								print("sended")
+                                            readli = loads(
 
-							else:
+                                                "".join(open("pv.json", "r", encoding="utf-8").read()))
 
-								app.sendMessage(pv,f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}",message_id = msg['message_id'])
+                                            app.sendMessage(
 
-								app.sendMessage(Gap,"پیوی خود را چک کنید",message_id = msg.get('message_id'))
+                                                Gap, "یاد گرفتم", message_id=msg['message_id'])
 
-								messageidjson.append(msg['message_id'])
+                                            print("Ok yadgire")
 
-								print("sended")
+                                    else:
 
-					except Exception as e:
+                                        app.sendMessage(
 
-						print(e)
+                                            Gap, "به دستورات اصلی من نمی توانید کلمه یاد دهید 😛", message_id=msg['message_id'])
 
+                                else:
 
+                                    app.sendMessage(
 
-				if "Remove_ads" in loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).keys() and "true" in ['true' if text in msg.get("text") else 'false' for text in re.findall(r"'(.*?)'", str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Remove_ads")))] and on != False:
+                                        Gap, "روی من نمیتونی ریپلای بزنی و دستور یاد بدی 😛", message_id=msg['message_id'])
 
-					print('get ads')
+                            else:
 
-					getdataVLUE = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get("Remove_ads"))
+                                app.sendMessage(
 
-					if '~ادمین بود ' in getdataVLUE.split('_')[0]:
+                                    Gap, "در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید", message_id=msg['message_id'])
 
-						if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                open("pv.json", "w").write("{}")
 
-							if "حذف نکن" in getdataVLUE.split('_')[1]:
+                        else:
 
-							    print('1 it is Admin no delete')
+                            app.sendMessage(
 
-							    pass
+                                Gap, "باید رو کلمه ای که میخوایی یاد بگیرم ریپلای کنی", message_id=msg['message_id'])
 
+                    except:
 
+                        continue
 
-							elif "حذف کن" in getdataVLUE.split('_')[1]:
 
-							    print('1 it is Admin yes delete')
 
-							    DELETE_ADS = app.deleteMessages(Gap,message_ids = [msg.get('message_id')],All = True).get('status')
+                elif msg.get("text") in loads("".join(open("pv.json", "r", encoding="utf-8").read())).keys() and not msg['message_id'] in messageidjson and on != False:
 
-							    print(DELETE_ADS)
+                    try:
 
-							    Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
+                        pv = msg.get("author_object_guid")
 
-							    if DELETE_ADS == 'OK':
+                        if "#ادمین" in str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-							    	app.sendMessage(Gap,"پیام با موفقیت حذف شد",message_id = msg.get('message_id'))
+                            if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-							    print(Matnads)
+                                if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#ساعت" or "#بیو" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
+                                    ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                    ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-						elif "وگرنه " in getdataVLUE.split('_')[1]:
+                                    family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-								if "حذف نکن" in getdataVLUE.split('_')[2]:
+                                    name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								    print('2 it is User no delete')
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
-								    pass
+                                    bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
+                                    mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#ادمین", "").replace("#بیو", bio).replace(
 
-								elif "حذف کن" in getdataVLUE.split('_')[2]:
+                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
-								    print('2 it is User yes delete')
+                                    app.sendMessage(pv, mtnesm)
 
-								    DELETE_ADS = app.deleteMessages(Gap,message_ids = [msg.get('message_id')],All = True).get('status')
+                                    app.sendMessage(
 
-								    Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
+                                        Gap, "پیوی خود را چک کنید", message_id=msg.get('message_id'))
 
-								    if DELETE_ADS == 'OK':
+                                    messageidjson.append(msg['message_id'])
 
-								    	app.sendMessage(Gap,"پیام با موفقیت حذف شد",message_id = msg.get('message_id'))
+                                    print("sended")
 
-								    print(Matnads)
+                                else:
 
+                                    app.sendMessage(
 
+                                        pv, f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}")
 
-						elif '~ادمین نبود ' in getdataVLUE.split('_')[0]:
+                                    app.sendMessage(
 
-							if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                        Gap, "پیوی خود را چک کنید", message_id=msg.get('message_id'))
 
-							    if "حذف نکن" in getdataVLUE.split('_')[1]:
+                                    messageidjson.append(msg['message_id'])
 
-							    	print('it is User')
+                                    print("sended")
 
-							    	pass
 
 
+                        elif "#کاربر" in str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-							    elif "حذف کن" in getdataVLUE.split('_')[1]:
+                            if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-							    	print('it is User')
+                                if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#ساعت" or "#بیو" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-							    	DELETE_ADS = app.deleteMessages(Gap,message_ids = [msg.get('message_id')],All = True).get('status')
+                                    ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							    	Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
+                                    ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-							    	if DELETE_ADS == 'OK':
+                                    family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							    		app.sendMessage(Gap,"پیام با موفقیت حذف شد",message_id = msg.get('message_id'))
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-							    	print(Matnads)
+                                    name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
+                                    bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							elif "وگرنه " in getdataVLUE.split('_')[1]:
+                                    ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-								if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                    mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
 
-								    if "حذف نکن" in getdataVLUE.split('_')[2]:
+                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
-								    	print('it is User')
+                                    app.sendMessage(pv, mtnesm)
 
-								    	pass
+                                    app.sendMessage(
 
+                                        Gap, "پیوی خود را چک کنید", message_id=msg.get('message_id'))
 
+                                    messageidjson.append(msg['message_id'])
 
-								    elif "حذف کن" in getdataVLUE.split('_')[2]:
+                                    print("sended")
 
-								    	print('it is User')
+                                else:
 
-								    	DELETE_ADS = app.deleteMessages(Gap,message_ids = [msg.get('message_id')],All = True).get('status')
+                                    app.sendMessage(
 
-								    	Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
+                                        pv, f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}")
 
-								    	if DELETE_ADS == 'OK':
+                                    app.sendMessage(
 
-								    		app.sendMessage(Gap,"پیام با موفقیت حذف شد",message_id = msg.get('message_id'))
+                                        Gap, "پیوی خود را چک کنید", message_id=msg.get('message_id'))
 
-								    	print(Matnads)
+                                    messageidjson.append(msg['message_id'])
 
+                                    print("sended")
 
+                            else:
 
+                                ...
 
 
-				if "Ban_ads" in loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).keys() and "true" in ['true' if text in msg.get("text") else 'false' for text in re.findall(r"'(.*?)'", str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Remove_ads")))] and on != False:
 
-					print('get ads and ban User')
+                        elif "#رندوم" in str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-					getdataVLUE = str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get("Ban_ads"))
+                            if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-					if '~ادمین بود ' in getdataVLUE.split('_')[0]:
+                                ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-						if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-							if "بن نکن" in getdataVLUE.split('_')[1]:
+                                family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							    print('1 it is Admin no ban')
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
-							    pass
+                                name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
+                                bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							elif "بن کن" in getdataVLUE.split('_')[1]:
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-							    print('1 it is Admin yes ban')
+                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
 
-							    BAN_ADS = app.banGroupMember(Gap,msg.get("author_object_guid")).get('status')
+                                    "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
-							    Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
+                                matnrendome = re.sub(r"#رندوم\s*((?:'[^']+'(?:,\s*)?)*)", lambda match: random.choice(
 
-							    if BAN_ADS == 'OK':
+                                    re.findall(r"'(.*?)'", match.group(1))), mtnesm).replace("'", "").replace(",", "")
 
-							    	app.sendMessage(Gap,"با موفقیت بن شد",message_id = msg.get('message_id'))
+                                messageidjson.append(msg['message_id'])
 
-							    print(Matnads)
+                                print("sended")
 
+                            else:
 
+                                mtnesm = loads(
 
-						elif "وگرنه " in getdataVLUE.split('_')[1]:
+                                    ''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))
 
-							if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                matnrendome = random.choice(
 
-								if "بن نکن" in getdataVLUE.split('_')[2]:
+                                    re.findall(r"'(.*?)'", mtnesm))
 
-								    print('2 it is User no ban')
+                                deletematn = ' '.join(
 
-								    pass
+                                    re.sub(r"'.*?'", "", mtnesm).split()).replace("#رندوم", matnrendome).strip(',')
 
+                                app.sendMessage(
 
+                                    Gap, deletematn, message_id=msg['message_id'])
 
-								elif "بن کن" in getdataVLUE.split('_')[2]:
+                                messageidjson.append(msg['message_id'])
 
-								    print('2 it is User yes ban')
+                                print("sended")
 
-								    BAN_ADS = app.banGroupMember(Gap,msg.get("author_object_guid")).get('status')
+                        else:
 
-								    Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
+                            if "#اسم" or "#ایدی" or "#لینک" or "#گروه" or "#فامیلی" or "#ساعت" or "#بیو" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))):
 
-								    if BAN_ADS == 'OK':
+                                ide = "#not" if not "username" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-								    	app.sendMessage(Gap,"با موفقیت بن شد",message_id = msg.get('message_id'))
+                                ) else f"@{app.getUserInfo(msg['author_object_guid'])['data']['user']['username']}"
 
-								    print(Matnads)
+                                family = "#not" if not "last_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['last_name']
 
+                                name = "#not" if not "first_name" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-						elif '~ادمین نبود ' in getdataVLUE.split('_')[0]:
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['first_name']
 
-							if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                                bio = "#not" if not "bio" in app.getUserInfo(msg["author_object_guid"])["data"]["user"].keys(
 
-							    if "بن نکن" in getdataVLUE.split('_')[1]:
+                                ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-							    	print('it is User')
+                                mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#بیو", bio).replace(
 
-							    	pass
+                                    "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
+                                app.sendMessage(pv, mtnesm)
 
+                                app.sendMessage(
 
-							    elif "بن کن" in getdataVLUE.split('_')[1]:
+                                    Gap, "پیوی خود را چک کنید", message_id=msg.get('message_id'))
 
-							    	print('it is User')
+                                messageidjson.append(msg['message_id'])
 
-							    	BAN_ADS = app.banGroupMember(Gap,msg.get("author_object_guid")).get('status')
+                                print("sended")
 
-							    	Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
+                            else:
 
-							    	if BAN_ADS == 'OK':
+                                app.sendMessage(
 
-							    		app.sendMessage(Gap,"با موفقیت بن شد",message_id = msg.get('message_id'))
+                                    pv, f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('text'))}", message_id=msg['message_id'])
 
-							    	print(Matnads)
+                                app.sendMessage(
 
+                                    Gap, "پیوی خود را چک کنید", message_id=msg.get('message_id'))
 
+                                messageidjson.append(msg['message_id'])
 
-							elif "وگرنه " in getdataVLUE.split('_')[1]:
+                                print("sended")
 
-								if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
+                    except Exception as e:
 
-								    if "بن نکن" in getdataVLUE.split('_')[2]:
+                        print(e)
 
-								    	print('it is User')
 
-								    	pass
 
+                if "Remove_ads" in loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).keys() and "true" in ['true' if text in msg.get("text") else 'false' for text in re.findall(r"'(.*?)'", str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Remove_ads")))] and on != False:
 
+                    print('get ads')
 
-								    elif "بن کن" in getdataVLUE.split('_')[2]:
+                    getdataVLUE = str(
 
-								    	print('it is User')
+                        loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Remove_ads"))
 
-								    	BAN_ADS = app.banGroupMember(Gap,msg.get("author_object_guid")).get('status')
+                    if '~ادمین بود ' in getdataVLUE.split('_')[0]:
 
-								    	Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
+                        if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-								    	if BAN_ADS == 'OK':
+                            if "حذف نکن" in getdataVLUE.split('_')[1]:
 
-								    		app.sendMessage(Gap,"با موفقیت بن شد",message_id = msg.get('message_id'))
+                                print('1 it is Admin no delete')
 
-								    	print(Matnads)
+                                pass
 
 
 
-				elif msg.get("text")  == "سکوت"  and msg.get("author_object_guid") in GetAdmin and on != False:
+                            elif "حذف کن" in getdataVLUE.split('_')[1]:
 
-					try:
+                                print('1 it is Admin yes delete')
 
-						if 'reply_to_message_id' in msg.keys():
+                                DELETE_ADS = app.deleteMessages(
 
-							typesend = app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["type"]
+                                    Gap, message_ids=[msg.get('message_id')], All=True).get('status')
 
-							if 'Event' in typesend:
+                                print(DELETE_ADS)
 
-								getkey = app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["event_data"]["type"]
+                                Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
 
-							elif "Text" in typesend:
+                                if DELETE_ADS == 'OK':
 
-								getkey = app.getMessagesInfo(Gap,[msg.get('reply_to_message_id')])["data"]["messages"][0]["text"]
+                                    app.sendMessage(
 
-							if getkey in loads("".join(open("pv.json","r",encoding = "utf-8").read())).keys():
+                                        Gap, "پیام با موفقیت حذف شد", message_id=msg.get('message_id'))
 
-								readJson = loads("".join(open("pv.json","r",encoding = "utf-8").read()))
+                                print(Matnads)
 
-								readJson.pop(getkey)
 
-								open("pv.json","w").write(dumps(readJson))
 
-								sleep(3)
+                        elif "وگرنه " in getdataVLUE.split('_')[1]:
 
-								app.sendMessage(Gap,"این دستور در حالت سکوت قرار گرفت",message_id = msg.get("reply_to_message_id"))
+                            if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-								print("sended sokot pv")
+                                if "حذف نکن" in getdataVLUE.split('_')[2]:
 
-							elif getkey in loads("".join(open("yad.json","r",encoding = "utf-8").read())).keys():
+                                    print('2 it is User no delete')
 
-								readJson = loads("".join(open("yad.json","r",encoding = "utf-8").read()))
+                                    pass
 
-								readJson.pop(getkey)
 
-								open("yad.json","w").write(dumps(readJson))
 
-								sleep(3)
+                                elif "حذف کن" in getdataVLUE.split('_')[2]:
 
-								app.sendMessage(Gap,"این دستور در حالت سکوت قرار گرفت",message_id = msg.get("reply_to_message_id"))
+                                    print('2 it is User yes delete')
 
-								print(f"sended sokot {getkey}")
+                                    DELETE_ADS = app.deleteMessages(
 
-							else:
+                                        Gap, message_ids=[msg.get('message_id')], All=True).get('status')
 
-								app.sendMessage(Gap,"خطا: من چنین دستوری یاد نگرفتم",message_id = msg.get("reply_to_message_id"))
+                                    Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
 
-						else:
+                                    if DELETE_ADS == 'OK':
 
-							app.sendMessage(Gap,"شما ریپ نزده اید",message_id = msg['message_id'])
+                                        app.sendMessage(
 
-					except:
+                                            Gap, "پیام با موفقیت حذف شد", message_id=msg.get('message_id'))
 
-						continue
+                                    print(Matnads)
 
 
 
-				elif msg.get("text")  == "/list" and on != False:
+                        elif '~ادمین نبود ' in getdataVLUE.split('_')[0]:
 
-					try:
+                            if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-						gad = ""
+                                if "حذف نکن" in getdataVLUE.split('_')[1]:
 
-						addad = 0
+                                    print('it is User')
 
-						for g in GetAdmin:
+                                    pass
 
-							addad += 1
 
-							nameadmin = app.getUserInfo(g)['data']['user']['first_name']
 
-							gad += f"{addad}: {nameadmin}\n"
+                                elif "حذف کن" in getdataVLUE.split('_')[1]:
 
-						app.sendMessage(Gap,f"{gad}\n\nتعداد آدمین ها : {addad} نفر",message_id = msg['message_id'])
+                                    print('it is User')
 
-					except:
+                                    DELETE_ADS = app.deleteMessages(
 
-						continue
+                                        Gap, message_ids=[msg.get('message_id')], All=True).get('status')
 
+                                    Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
 
+                                    if DELETE_ADS == 'OK':
 
-				elif msg.get("text")  == "حالت روشن"  and msg.get("author_object_guid") in GetAdmin :
+                                        app.sendMessage(
 
-					try:
+                                            Gap, "پیام با موفقیت حذف شد", message_id=msg.get('message_id'))
 
-						if on == False:
+                                    print(Matnads)
 
-							on = True
 
-							app.sendMessage(Gap,"با موفقیت فعال شد",message_id = msg['message_id'])
 
-						else:
+                            elif "وگرنه " in getdataVLUE.split('_')[1]:
 
-							app.sendMessage(Gap,"قبلا روشن شده است",message_id = msg['message_id'])
+                                if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-					except:
+                                    if "حذف نکن" in getdataVLUE.split('_')[2]:
 
-						continue
+                                        print('it is User')
 
+                                        pass
 
 
-				elif msg.get("text")  == "حالت خاموش"   and msg.get("author_object_guid") in GetAdmin :
 
-					try:
+                                    elif "حذف کن" in getdataVLUE.split('_')[2]:
 
-						if on == True:
+                                        print('it is User')
 
-							on = False
+                                        DELETE_ADS = app.deleteMessages(
 
-							app.sendMessage(Gap,"با موفقیت غیرفعال شد",message_id = msg['message_id'])
+                                            Gap, message_ids=[msg.get('message_id')], All=True).get('status')
 
-						else:
+                                        Matnads = "ok delete ADS" if DELETE_ADS == 'OK' else "error delete ADS"
 
-							app.sendMessage(Gap,"قبلا خاموش شده است",message_id = msg['message_id'])
+                                        if DELETE_ADS == 'OK':
 
-					except:
+                                            app.sendMessage(
 
-						continue
+                                                Gap, "پیام با موفقیت حذف شد", message_id=msg.get('message_id'))
 
+                                        print(Matnads)
 
 
-				elif msg.get("text").startswith("/admin") and msg.get("author_object_guid") == admin and on != False:
 
-					try:
+                if "Ban_ads" in loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).keys() and "true" in ['true' if text in msg.get("text") else 'false' for text in re.findall(r"'(.*?)'", str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Remove_ads")))] and on != False:
 
-						if 'reply_to_message_id' in msg.keys() and msg.get("text") == "/admin":
+                    print('get ads and ban User')
 
-							getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])["data"]["messages"][0]["author_object_guid"]
+                    getdataVLUE = str(
 
-							check = os.path.exists("admins.json")
+                        loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Ban_ads"))
 
-							if check == True:
+                    if '~ادمین بود ' in getdataVLUE.split('_')[0]:
 
-								read = open("admins.json","r",encoding = "utf-8").read()
+                        if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-								if read == "":
+                            if "بن نکن" in getdataVLUE.split('_')[1]:
 
-									buidadmin = {f"{getguiduser}":"Ok"}
+                                print('1 it is Admin no ban')
 
-									write = open("admins.json","w").write(dumps(buidadmin))
+                                pass
 
-									app.sendMessage(Gap,"شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید",message_id = msg.get("reply_to_message_id"))
 
-								elif read != "":
 
-									if read == "{}":
+                            elif "بن کن" in getdataVLUE.split('_')[1]:
 
-										getjsadmins = loads("".join(open("admins.json","r").read()))
+                                print('1 it is Admin yes ban')
 
-										getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])["data"]["messages"][0]["author_object_guid"]
+                                BAN_ADS = app.banGroupMember(Gap, msg.get(
 
-										getjsadmins.update({f"{getguiduser}":"Ok"})
+                                    "author_object_guid")).get('status')
 
-										write = open("admins.json","w").write(dumps(getjsadmins))
+                                Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
 
-										app.sendMessage(Gap,"شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید",message_id = msg.get("reply_to_message_id"))
+                                if BAN_ADS == 'OK':
 
-										getkeys = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
+                                    app.sendMessage(
 
-										GetAdmin.append(getguiduser)
+                                        Gap, "با موفقیت بن شد", message_id=msg.get('message_id'))
 
-									else:
+                                print(Matnads)
 
-										getjsadmins = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
 
-										getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])["data"]["messages"][0]["author_object_guid"]
 
-										if not getguiduser in getjsadmins.keys():
+                        elif "وگرنه " in getdataVLUE.split('_')[1]:
 
-											getjsadmins.update({f"{getguiduser}":"Ok"})
+                            if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-											write = open("admins.json","w").write(dumps(getjsadmins))
+                                if "بن نکن" in getdataVLUE.split('_')[2]:
 
-											app.sendMessage(Gap,"شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید",message_id = msg.get("reply_to_message_id"))
+                                    print('2 it is User no ban')
 
-											getkeys = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
+                                    pass
 
-											GetAdmin.append(getguiduser)
 
-										else:
 
-											app.sendMessage(Gap,"این کاربر قبلا آدمین شده است",message_id = msg.get("reply_to_message_id"))
+                                elif "بن کن" in getdataVLUE.split('_')[2]:
 
-							else:
+                                    print('2 it is User yes ban')
 
-								app.sendMessage(Gap,"در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید",message_id = msg['message_id'])
+                                    BAN_ADS = app.banGroupMember(Gap, msg.get(
 
-								open("admins.json","w").write("{}")
+                                        "author_object_guid")).get('status')
 
+                                    Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
 
+                                    if BAN_ADS == 'OK':
 
+                                        app.sendMessage(
 
+                                            Gap, "با موفقیت بن شد", message_id=msg.get('message_id'))
 
-						elif "@" in msg.get("text").replace("/admin","").split(" ")[-1]:
+                                    print(Matnads)
 
-							getguiduser = app.getInfoByUsername(msg.get("text").replace("/admin","").split(" ")[-1])["data"]["user"]["user_guid"]
 
-							check = os.path.exists("admins.json")
 
-							if check == True:
+                        elif '~ادمین نبود ' in getdataVLUE.split('_')[0]:
 
-								read = open("admins.json","r",encoding = "utf-8").read()
+                            if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-								if read == "":
+                                if "بن نکن" in getdataVLUE.split('_')[1]:
 
-									buidadmin = {f"{getguiduser}":"Ok"}
+                                    print('it is User')
 
-									write = open("admins.json","w").write(dumps(buidadmin))
+                                    pass
 
-									app.sendMessage(Gap,"شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید",message_id = msg.get("reply_to_message_id"))
 
-								elif read != "":
 
-									if read == "{}":
+                                elif "بن کن" in getdataVLUE.split('_')[1]:
 
-										getjsadmins = loads("".join(open("admins.json","r").read()))
+                                    print('it is User')
 
-										getguiduser = app.getInfoByUsername(msg.get("text").replace("/admin","").split(" ")[-1])["data"]["user"]["user_guid"]
+                                    BAN_ADS = app.banGroupMember(Gap, msg.get(
 
-										getjsadmins.update({f"{getguiduser}":"Ok"})
+                                        "author_object_guid")).get('status')
 
-										write = open("admins.json","w").write(dumps(getjsadmins))
+                                    Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
 
-										app.sendMessage(Gap,"شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید",message_id = msg.get("reply_to_message_id"))
+                                    if BAN_ADS == 'OK':
 
-										getkeys = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
+                                        app.sendMessage(
 
-										GetAdmin.append(getguiduser)
+                                            Gap, "با موفقیت بن شد", message_id=msg.get('message_id'))
 
-									else:
+                                    print(Matnads)
 
-										getjsadmins = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
 
-										getguiduser = app.getInfoByUsername(msg.get("text").replace("/admin","").split(" ")[-1])["data"]["user"]["user_guid"]
 
-										if not getguiduser in getjsadmins.keys():
+                            elif "وگرنه " in getdataVLUE.split('_')[1]:
 
-											getjsadmins.update({f"{getguiduser}":"Ok"})
+                                if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-											write = open("admins.json","w").write(dumps(getjsadmins))
+                                    if "بن نکن" in getdataVLUE.split('_')[2]:
 
-											app.sendMessage(Gap,"شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید",message_id = msg.get("reply_to_message_id"))
+                                        print('it is User')
 
-											getkeys = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
+                                        pass
 
-											GetAdmin.append(getguiduser)
 
-										else:
 
-											app.sendMessage(Gap,"این کاربر قبلا آدمین شده است",message_id = msg.get("reply_to_message_id"))
+                                    elif "بن کن" in getdataVLUE.split('_')[2]:
 
-						else:
+                                        print('it is User')
 
-							app.sendMessage(Gap,"آیدی کاربری که میخوایی آدمین بشه رو به من ندادی 😐",message_id = msg['message_id'])
+                                        BAN_ADS = app.banGroupMember(Gap, msg.get(
 
-					except:
+                                            "author_object_guid")).get('status')
 
-						continue
+                                        Matnads = "ok ban ADS" if BAN_ADS == 'OK' else "error ban ADS"
 
+                                        if BAN_ADS == 'OK':
 
+                                            app.sendMessage(
 
-				elif msg.get("text").startswith("/unadmin") and msg.get("author_object_guid") == admin and on != False:
+                                                Gap, "با موفقیت بن شد", message_id=msg.get('message_id'))
 
-					try:
+                                        print(Matnads)
 
-						if 'reply_to_message_id' in msg.keys() and msg.get("text") == "/unadmin":
 
-							getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])["data"]["messages"][0]["author_object_guid"]
 
-							check = os.path.exists("admins.json")
+                elif msg.get("text") == "سکوت" and msg.get("author_object_guid") in GetAdmin and on != False:
 
-							if check == True:
+                    try:
 
-								read = open("admins.json","r",encoding = "utf-8").read()
+                        if 'reply_to_message_id' in msg.keys():
 
-								if read == "":
+                            typesend = app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-									app.sendMessage(Gap,"فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد",message_id = msg.get("reply_to_message_id"))
+                                "data"]["messages"][0]["type"]
 
-								elif read != "":
+                            if 'Event' in typesend:
 
-									if read == "{}":
+                                getkey = app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-										app.sendMessage(Gap,"فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد",message_id = msg.get("reply_to_message_id"))
+                                    "data"]["messages"][0]["event_data"]["type"]
 
-									else:
+                            elif "Text" in typesend:
 
-										getjsadmins = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
+                                getkey = app.getMessagesInfo(Gap, [msg.get('reply_to_message_id')])[
 
-										getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])["data"]["messages"][0]["author_object_guid"]
+                                    "data"]["messages"][0]["text"]
 
-										if getguiduser in getjsadmins.keys():
+                            if getkey in loads("".join(open("pv.json", "r", encoding="utf-8").read())).keys():
 
-											getjsadmins.pop(getguiduser)
+                                readJson = loads(
 
-											write = open("admins.json","w").write(dumps(getjsadmins))
+                                    "".join(open("pv.json", "r", encoding="utf-8").read()))
 
-											app.sendMessage(Gap,"این کاربر از ادمینی برداشته شد",message_id = msg.get("reply_to_message_id"))
+                                readJson.pop(getkey)
 
-											GetAdmin.remove(getguiduser)
+                                open("pv.json", "w").write(dumps(readJson))
 
-										else:
+                                sleep(3)
 
-											app.sendMessage(Gap,"این کاربر قبلا از ادمینی برداشته شده است",message_id = msg.get("reply_to_message_id"))
+                                app.sendMessage(Gap, "این دستور در حالت سکوت قرار گرفت", message_id=msg.get(
 
-							else:
+                                    "reply_to_message_id"))
 
-								app.sendMessage(Gap,"در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید",message_id = msg['message_id'])
+                                print("sended sokot pv")
 
-								open("admins.json","w").write("{}")
+                            elif getkey in loads("".join(open("yad.json", "r", encoding="utf-8").read())).keys():
 
+                                readJson = loads(
 
+                                    "".join(open("yad.json", "r", encoding="utf-8").read()))
 
-						elif "@" in msg.get("text").replace("/unadmin","").split(" ")[-1]:
+                                readJson.pop(getkey)
 
-							getguiduser = app.getInfoByUsername(msg.get("text").replace("/unadmin","").split(" ")[-1])["data"]["user"]["user_guid"]
+                                open("yad.json", "w").write(dumps(readJson))
 
-							check = os.path.exists("admins.json")
+                                sleep(3)
 
-							if check == True:
+                                app.sendMessage(Gap, "این دستور در حالت سکوت قرار گرفت", message_id=msg.get(
 
-								read = open("admins.json","r",encoding = "utf-8").read()
+                                    "reply_to_message_id"))
 
-								if read == "":
+                                print(f"sended sokot {getkey}")
 
-									app.sendMessage(Gap,"فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد",message_id = msg.get("reply_to_message_id"))
+                            else:
 
-								elif read != "":
+                                app.sendMessage(Gap, "خطا: من چنین دستوری یاد نگرفتم", message_id=msg.get(
 
-									if read == "{}":
+                                    "reply_to_message_id"))
 
-										app.sendMessage(Gap,"فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد",message_id = msg.get("reply_to_message_id"))
+                        else:
 
-									else:
+                            app.sendMessage(
 
-										getjsadmins = loads("".join(open("admins.json","r",encoding = "utf-8").read()))
+                                Gap, "شما ریپ نزده اید", message_id=msg['message_id'])
 
-										getguiduser = app.getInfoByUsername(msg.get("text").replace("/unadmin","").split(" ")[-1])["data"]["user"]["user_guid"]
+                    except:
 
-										if getguiduser in getjsadmins.keys():
+                        continue
 
-											getjsadmins.pop(getguiduser)
 
-											write = open("admins.json","w").write(dumps(getjsadmins))
 
-											app.sendMessage(Gap,"این کاربر از ادمینی برداشته شد",message_id = msg.get("reply_to_message_id"))
+                elif msg.get("text") == "/list" and on != False:
 
-											GetAdmin.remove(getguiduser)
+                    try:
 
-										else:
+                        gad = ""
 
-											app.sendMessage(Gap,"این کاربر قبلا از ادمینی برداشته شده است",message_id = msg.get("reply_to_message_id"))
+                        addad = 0
 
-						else:
+                        for g in GetAdmin:
 
-							app.sendMessage(Gap,"آیدی کاربری که میخوایی از آدمینی برداشته بشه رو به من ندادی 😐",message_id = msg['message_id'])
+                            addad += 1
 
-					except:
+                            nameadmin = app.getUserInfo(
 
-						continue
+                                g)['data']['user']['first_name']
 
+                            gad += f"{addad}: {nameadmin}\n"
 
+                        app.sendMessage(
 
-			elif msg.get("type") == "Event" and not msg['message_id'] in limsg and on != False:
+                            Gap, f"{gad}\n\nتعداد آدمین ها : {addad} نفر", message_id=msg['message_id'])
 
-				try:
+                    except:
 
-					print("message glass")
+                        continue
 
-					limsg.append(msg['message_id'])
 
-					GetGuid_Glass = msg['event_data']['peer_objects'][0]['object_guid'] if 'peer_objects' in msg['event_data'].keys() else msg['event_data']['performer_object']['object_guid']
 
-					if msg.get("event_data").get("type") in loads("".join(open("yad.json","r",encoding = "utf-8").read())).keys() and not msg['message_id'] in messageidjson:
+                elif msg.get("text") == "حالت روشن" and msg.get("author_object_guid") in GetAdmin:
 
-						if "#اسم" or "#ایدی"  or "#گروه" or "#فامیلی" or "#لینک"  or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type'))):
+                    try:
 
-							ide = "#not" if not "username" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else f"@{app.getUserInfo(GetGuid_Glass)['data']['user']['username']}"
+                        if on == False:
 
-							family = "#not" if not "last_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else app.getUserInfo(GetGuid_Glass)['data']['user']['last_name']
+                            on = True
 
-							name = "#not" if not "first_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else app.getUserInfo(GetGuid_Glass)['data']['user']['first_name']
+                            app.sendMessage(
 
-							bio = "#not" if not "bio" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else app.getUserInfo(GetGuid_Glass)['data']['user']['bio']
+                                Gap, "با موفقیت فعال شد", message_id=msg['message_id'])
 
-							sendmatn = loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم",name).replace("#ایدی",ide).replace("#بیو",bio).replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}")
+                        else:
 
-							app.sendMessage(Gap,sendmatn,message_id = msg['message_id'])
+                            app.sendMessage(
 
-							messageidjson.append(msg['message_id'])
+                                Gap, "قبلا روشن شده است", message_id=msg['message_id'])
 
-							print("sended glass Gap")
+                    except:
 
-						else:
+                        continue
 
-							app.sendMessage(Gap,f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type'))}",message_id = msg['message_id'])
 
-							messageidjson.append(msg['message_id'])
 
-							print("sended glass Gap")
+                elif msg.get("text") == "حالت خاموش" and msg.get("author_object_guid") in GetAdmin:
 
+                    try:
 
+                        if on == True:
 
-					else:
+                            on = False
 
-					    if msg.get("event_data").get("type") in loads("".join(open("pv.json","r",encoding = "utf-8").read())).keys() and not msg['message_id'] in messageidjson:
+                            app.sendMessage(
 
-						    pv = msg['event_data']['performer_object']['object_guid']
+                                Gap, "با موفقیت غیرفعال شد", message_id=msg['message_id'])
 
-						    if "#اسم" or "#ایدی"  or "#گروه" or "#فامیلی" or "#لینک"  or "#بیو" or "#ساعت" in str(loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type'))):
+                        else:
 
-							    ide = "#not" if not "username" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else f"@{app.getUserInfo(GetGuid_Glass)['data']['user']['username']}"
+                            app.sendMessage(
 
-							    family = "#not" if not "last_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else app.getUserInfo(GetGuid_Glass)['data']['user']['last_name']
+                                Gap, "قبلا خاموش شده است", message_id=msg['message_id'])
 
-							    name = "#not" if not "first_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else app.getUserInfo(GetGuid_Glass)['data']['user']['first_name']
+                    except:
 
-							    bio = "#not" if not "bio" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys() else app.getUserInfo(GetGuid_Glass)['data']['user']['bio']
+                        continue
 
-							    sendmatn = loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم",name).replace("#ایدی",ide).replace("#بیو",bio).replace("#گروه",app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی",family).replace("#ساعت",f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}")
 
-							    app.sendMessage(pv,sendmatn,message_id = msg['message_id'])
 
-							    messageidjson.append(msg['message_id'])
+                elif msg.get("text").startswith("/admin") and msg.get("author_object_guid") == admin and on != False:
 
-							    print("sended glass pv")
+                    try:
 
-						    else:
+                        if 'reply_to_message_id' in msg.keys() and msg.get("text") == "/admin":
 
-							    app.sendMessage(pv,f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type'))}",message_id = msg['message_id'])
+                            getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])[
 
-							    messageidjson.append(msg['message_id'])
+                                "data"]["messages"][0]["author_object_guid"]
 
-							    print("sended glass pv")
+                            check = os.path.exists("admins.json")
 
-				except Exception as error:
+                            if check == True:
 
-					print(error)
+                                read = open("admins.json", "r",
 
+                                            encoding="utf-8").read()
 
+                                if read == "":
 
-	except FileNotFoundError:
+                                    buidadmin = {f"{getguiduser}": "Ok"}
 
-		if sended == False:
+                                    write = open("admins.json", "w").write(
 
-			app.sendMessage(Gap,"در حال ساخت فایل مورد نظر بعد از چند ثانیه دوباره دستور دهید")
+                                        dumps(buidadmin))
 
-			sended = True
+                                    app.sendMessage(Gap, "شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید", message_id=msg.get(
 
-		else:...
+                                        "reply_to_message_id"))
 
-		yad = os.path.exists("yad.json")
+                                elif read != "":
 
-		admins = os.path.exists("admins.json")
+                                    if read == "{}":
 
-		pve = os.path.exists("pv.json")
+                                        getjsadmins = loads(
 
-		if admins == False:
+                                            "".join(open("admins.json", "r").read()))
 
-			open("admins.json","w").write("{}")
+                                        getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])[
 
-			print("starting building admins.json")
+                                            "data"]["messages"][0]["author_object_guid"]
 
-		elif yad == False:
+                                        getjsadmins.update(
 
-			open("yad.json","w").write("{}")
+                                            {f"{getguiduser}": "Ok"})
 
-			print("starting building yad.json")
+                                        write = open("admins.json", "w").write(
 
-		elif pve == False:
+                                            dumps(getjsadmins))
 
-			open("pv.json","w").write("{}")
+                                        app.sendMessage(Gap, "شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید", message_id=msg.get(
 
-			print("starting building pv.json")
+                                            "reply_to_message_id"))
 
-	except Exception as s :
+                                        getkeys = loads(
 
-		print(s)
+                                            "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                        GetAdmin.append(getguiduser)
+
+                                    else:
+
+                                        getjsadmins = loads(
+
+                                            "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                        getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])[
+
+                                            "data"]["messages"][0]["author_object_guid"]
+
+                                        if not getguiduser in getjsadmins.keys():
+
+                                            getjsadmins.update(
+
+                                                {f"{getguiduser}": "Ok"})
+
+                                            write = open("admins.json", "w").write(
+
+                                                dumps(getjsadmins))
+
+                                            app.sendMessage(Gap, "شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                                            getkeys = loads(
+
+                                                "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                            GetAdmin.append(getguiduser)
+
+                                        else:
+
+                                            app.sendMessage(Gap, "این کاربر قبلا آدمین شده است", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                            else:
+
+                                app.sendMessage(
+
+                                    Gap, "در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید", message_id=msg['message_id'])
+
+                                open("admins.json", "w").write("{}")
+
+
+
+                        elif "@" in msg.get("text").replace("/admin", "").split(" ")[-1]:
+
+                            getguiduser = app.getInfoByUsername(msg.get("text").replace(
+
+                                "/admin", "").split(" ")[-1])["data"]["user"]["user_guid"]
+
+                            check = os.path.exists("admins.json")
+
+                            if check == True:
+
+                                read = open("admins.json", "r",
+
+                                            encoding="utf-8").read()
+
+                                if read == "":
+
+                                    buidadmin = {f"{getguiduser}": "Ok"}
+
+                                    write = open("admins.json", "w").write(
+
+                                        dumps(buidadmin))
+
+                                    app.sendMessage(Gap, "شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید", message_id=msg.get(
+
+                                        "reply_to_message_id"))
+
+                                elif read != "":
+
+                                    if read == "{}":
+
+                                        getjsadmins = loads(
+
+                                            "".join(open("admins.json", "r").read()))
+
+                                        getguiduser = app.getInfoByUsername(msg.get("text").replace(
+
+                                            "/admin", "").split(" ")[-1])["data"]["user"]["user_guid"]
+
+                                        getjsadmins.update(
+
+                                            {f"{getguiduser}": "Ok"})
+
+                                        write = open("admins.json", "w").write(
+
+                                            dumps(getjsadmins))
+
+                                        app.sendMessage(Gap, "شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید", message_id=msg.get(
+
+                                            "reply_to_message_id"))
+
+                                        getkeys = loads(
+
+                                            "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                        GetAdmin.append(getguiduser)
+
+                                    else:
+
+                                        getjsadmins = loads(
+
+                                            "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                        getguiduser = app.getInfoByUsername(msg.get("text").replace(
+
+                                            "/admin", "").split(" ")[-1])["data"]["user"]["user_guid"]
+
+                                        if not getguiduser in getjsadmins.keys():
+
+                                            getjsadmins.update(
+
+                                                {f"{getguiduser}": "Ok"})
+
+                                            write = open("admins.json", "w").write(
+
+                                                dumps(getjsadmins))
+
+                                            app.sendMessage(Gap, "شما با موفقیت آدمین شده اید\n\nهم اکنون می توانید به من کلمه یاد دهید", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                                            getkeys = loads(
+
+                                                "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                            GetAdmin.append(getguiduser)
+
+                                        else:
+
+                                            app.sendMessage(Gap, "این کاربر قبلا آدمین شده است", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                        else:
+
+                            app.sendMessage(
+
+                                Gap, "آیدی کاربری که میخوایی آدمین بشه رو به من ندادی 😐", message_id=msg['message_id'])
+
+                    except:
+
+                        continue
+
+
+
+                elif msg.get("text").startswith("/unadmin") and msg.get("author_object_guid") == admin and on != False:
+
+                    try:
+
+                        if 'reply_to_message_id' in msg.keys() and msg.get("text") == "/unadmin":
+
+                            getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])[
+
+                                "data"]["messages"][0]["author_object_guid"]
+
+                            check = os.path.exists("admins.json")
+
+                            if check == True:
+
+                                read = open("admins.json", "r",
+
+                                            encoding="utf-8").read()
+
+                                if read == "":
+
+                                    app.sendMessage(Gap, "فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد", message_id=msg.get(
+
+                                        "reply_to_message_id"))
+
+                                elif read != "":
+
+                                    if read == "{}":
+
+                                        app.sendMessage(Gap, "فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد", message_id=msg.get(
+
+                                            "reply_to_message_id"))
+
+                                    else:
+
+                                        getjsadmins = loads(
+
+                                            "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                        getguiduser = app.getMessagesInfo(Gap, [msg.get("reply_to_message_id")])[
+
+                                            "data"]["messages"][0]["author_object_guid"]
+
+                                        if getguiduser in getjsadmins.keys():
+
+                                            getjsadmins.pop(getguiduser)
+
+                                            write = open("admins.json", "w").write(
+
+                                                dumps(getjsadmins))
+
+                                            app.sendMessage(Gap, "این کاربر از ادمینی برداشته شد", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                                            GetAdmin.remove(getguiduser)
+
+                                        else:
+
+                                            app.sendMessage(Gap, "این کاربر قبلا از ادمینی برداشته شده است", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                            else:
+
+                                app.sendMessage(
+
+                                    Gap, "در حال ساخت فایل بعد از 5 ثانیه دوباره دستور دهید", message_id=msg['message_id'])
+
+                                open("admins.json", "w").write("{}")
+
+
+
+                        elif "@" in msg.get("text").replace("/unadmin", "").split(" ")[-1]:
+
+                            getguiduser = app.getInfoByUsername(msg.get("text").replace(
+
+                                "/unadmin", "").split(" ")[-1])["data"]["user"]["user_guid"]
+
+                            check = os.path.exists("admins.json")
+
+                            if check == True:
+
+                                read = open("admins.json", "r",
+
+                                            encoding="utf-8").read()
+
+                                if read == "":
+
+                                    app.sendMessage(Gap, "فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد", message_id=msg.get(
+
+                                        "reply_to_message_id"))
+
+                                elif read != "":
+
+                                    if read == "{}":
+
+                                        app.sendMessage(Gap, "فعلا بجز آدمین اصلی هیچ فرد دیگری آدمین نمی باشد", message_id=msg.get(
+
+                                            "reply_to_message_id"))
+
+                                    else:
+
+                                        getjsadmins = loads(
+
+                                            "".join(open("admins.json", "r", encoding="utf-8").read()))
+
+                                        getguiduser = app.getInfoByUsername(msg.get("text").replace(
+
+                                            "/unadmin", "").split(" ")[-1])["data"]["user"]["user_guid"]
+
+                                        if getguiduser in getjsadmins.keys():
+
+                                            getjsadmins.pop(getguiduser)
+
+                                            write = open("admins.json", "w").write(
+
+                                                dumps(getjsadmins))
+
+                                            app.sendMessage(Gap, "این کاربر از ادمینی برداشته شد", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                                            GetAdmin.remove(getguiduser)
+
+                                        else:
+
+                                            app.sendMessage(Gap, "این کاربر قبلا از ادمینی برداشته شده است", message_id=msg.get(
+
+                                                "reply_to_message_id"))
+
+                        else:
+
+                            app.sendMessage(
+
+                                Gap, "آیدی کاربری که میخوایی از آدمینی برداشته بشه رو به من ندادی 😐", message_id=msg['message_id'])
+
+                    except:
+
+                        continue
+
+
+
+            elif msg.get("type") == "Event" and not msg['message_id'] in limsg and on != False:
+
+                try:
+
+                    print("message glass")
+
+                    limsg.append(msg['message_id'])
+
+                    GetGuid_Glass = msg['event_data']['peer_objects'][0]['object_guid'] if 'peer_objects' in msg['event_data'].keys(
+
+                    ) else msg['event_data']['performer_object']['object_guid']
+
+                    if msg.get("event_data").get("type") in loads("".join(open("yad.json", "r", encoding="utf-8").read())).keys() and not msg['message_id'] in messageidjson:
+
+                        if "#اسم" or "#ایدی" or "#گروه" or "#فامیلی" or "#لینک" or "#بیو" or "#ساعت" in str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type'))):
+
+                            ide = "#not" if not "username" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                            ) else f"@{app.getUserInfo(GetGuid_Glass)['data']['user']['username']}"
+
+                            family = "#not" if not "last_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                            ) else app.getUserInfo(GetGuid_Glass)['data']['user']['last_name']
+
+                            name = "#not" if not "first_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                            ) else app.getUserInfo(GetGuid_Glass)['data']['user']['first_name']
+
+                            bio = "#not" if not "bio" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                            ) else app.getUserInfo(GetGuid_Glass)['data']['user']['bio']
+
+                            sendmatn = loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم", name).replace("#ایدی", ide).replace("#بیو", bio).replace(
+
+                                "#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}")
+
+                            app.sendMessage(
+
+                                Gap, sendmatn, message_id=msg['message_id'])
+
+                            messageidjson.append(msg['message_id'])
+
+                            print("sended glass Gap")
+
+                        else:
+
+                            app.sendMessage(
+
+                                Gap, f"{loads(''.join(open('yad.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type'))}", message_id=msg['message_id'])
+
+                            messageidjson.append(msg['message_id'])
+
+                            print("sended glass Gap")
+
+
+
+                    else:
+
+                        if msg.get("event_data").get("type") in loads("".join(open("pv.json", "r", encoding="utf-8").read())).keys() and not msg['message_id'] in messageidjson:
+
+                            pv = msg['event_data']['performer_object']['object_guid']
+
+                            if "#اسم" or "#ایدی" or "#گروه" or "#فامیلی" or "#لینک" or "#بیو" or "#ساعت" in str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type'))):
+
+                                ide = "#not" if not "username" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                                ) else f"@{app.getUserInfo(GetGuid_Glass)['data']['user']['username']}"
+
+                                family = "#not" if not "last_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                                ) else app.getUserInfo(GetGuid_Glass)['data']['user']['last_name']
+
+                                name = "#not" if not "first_name" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                                ) else app.getUserInfo(GetGuid_Glass)['data']['user']['first_name']
+
+                                bio = "#not" if not "bio" in app.getUserInfo(GetGuid_Glass)['data']['user'].keys(
+
+                                ) else app.getUserInfo(GetGuid_Glass)['data']['user']['bio']
+
+                                sendmatn = loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم", name).replace("#ایدی", ide).replace("#بیو", bio).replace(
+
+                                    "#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}")
+
+                                app.sendMessage(
+
+                                    pv, sendmatn, message_id=msg['message_id'])
+
+                                messageidjson.append(msg['message_id'])
+
+                                print("sended glass pv")
+
+                            else:
+
+                                app.sendMessage(
+
+                                    pv, f"{loads(''.join(open('pv.json','r',encoding = 'utf-8').read())).get(msg.get('event_data').get('type'))}", message_id=msg['message_id'])
+
+                                messageidjson.append(msg['message_id'])
+
+                                print("sended glass pv")
+
+                except Exception as error:
+
+                    print(error)
+
+
+
+    except FileNotFoundError:
+
+        if sended == False:
+
+            app.sendMessage(
+
+                Gap, "در حال ساخت فایل مورد نظر بعد از چند ثانیه دوباره دستور دهید")
+
+            sended = True
+
+        else:
+
+            ...
+
+        yad = os.path.exists("yad.json")
+
+        admins = os.path.exists("admins.json")
+
+        pve = os.path.exists("pv.json")
+
+        if admins == False:
+
+            open("admins.json", "w").write("{}")
+
+            print("starting building admins.json")
+
+        elif yad == False:
+
+            open("yad.json", "w").write("{}")
+
+            print("starting building yad.json")
+
+        elif pve == False:
+
+            open("pv.json", "w").write("{}")
+
+            print("starting building pv.json")
+
+    except Exception as s:
+
+        print(s)
