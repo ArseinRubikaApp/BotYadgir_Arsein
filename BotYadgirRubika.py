@@ -8,19 +8,23 @@
 
 from arsein import Messenger
 
+from datetime import datetime
+
 from json import *
 
 import os.path
 
 import time
 
-from time import sleep, localtime
+from time import sleep
 
 import os
 
 import re
 
 import random
+
+import pytz
 
 
 
@@ -57,6 +61,18 @@ app = Messenger(auth, keyp)
 limsg, yadDic, readli, messageidjson, GetAdmin, sended, on, removeads, getcheckAds, CHATHISTORY, errorRepleytobot, dastor_bot = [
 
 ], [], None, [], [], False, True, False, [], False, False, ['/admin', '/unadmin', 'سکوت']
+
+
+
+
+
+def get_timer():
+
+    timer_iran = datetime.now(pytz.timezone(
+
+        'Asia/Tehran')).strftime("%H:%M:%S")
+
+    return timer_iran.replace(":", "\u200E:\u200E")
 
 
 
@@ -452,9 +468,9 @@ while 1:
 
                                     ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                    mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#ادمین", "").replace("#بیو", bio).replace(
+                                    mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                        "#ادمین", "").replace("#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                     app.sendMessage(
 
@@ -500,9 +516,9 @@ while 1:
 
                                     ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                    mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
+                                    mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                        "#کاربر", "").replace("#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                     app.sendMessage(
 
@@ -548,9 +564,9 @@ while 1:
 
                                 ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
+                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                    "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                    "#کاربر", "").replace("#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                 matnrendome = re.sub(r"#رندوم\s*((?:'[^']+'(?:,\s*)?)*)", lambda match: random.choice(
 
@@ -610,7 +626,7 @@ while 1:
 
                                 mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                    "#ساعت", time.strftime("%H : %M : %S", localtime())).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#بیو", bio)
+                                    "#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#بیو", bio)
 
                                 app.sendMessage(
 
@@ -800,9 +816,9 @@ while 1:
 
                                     ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                    mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#ادمین", "").replace("#بیو", bio).replace(
+                                    mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                        "#ادمین", "").replace("#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                     app.sendMessage(pv, mtnesm)
 
@@ -852,9 +868,9 @@ while 1:
 
                                     ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                    mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
+                                    mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                        "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                        "#کاربر", "").replace("#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                     app.sendMessage(pv, mtnesm)
 
@@ -906,9 +922,9 @@ while 1:
 
                                 ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#کاربر", "").replace("#بیو", bio).replace(
+                                mtnesm = str(loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                    "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                    "#کاربر", "").replace("#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                 matnrendome = re.sub(r"#رندوم\s*((?:'[^']+'(?:,\s*)?)*)", lambda match: random.choice(
 
@@ -960,9 +976,9 @@ while 1:
 
                                 ) else app.getUserInfo(msg["author_object_guid"])['data']['user']['bio']
 
-                                mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace("#بیو", bio).replace(
+                                mtnesm = str(loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('text'))).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                    "#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}").replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
+                                    "#بیو", bio).replace("#ساعت", get_timer()).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family)
 
                                 app.sendMessage(pv, mtnesm)
 
@@ -1136,15 +1152,15 @@ while 1:
 
                     print('get ads and ban User')
 
-                    getdataVLUE = str(
+                    getdataVLUEs = str(
 
                         loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get("Ban_ads"))
 
-                    if '~ادمین بود ' in getdataVLUE.split('_')[0]:
+                    if '~ادمین بود ' in getdataVLUEs.split('_')[0]:
 
                         if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-                            if "بن نکن" in getdataVLUE.split('_')[1]:
+                            if "بن نکن" in getdataVLUEs.split('_')[1]:
 
                                 print('1 it is Admin no ban')
 
@@ -1152,7 +1168,7 @@ while 1:
 
 
 
-                            elif "بن کن" in getdataVLUE.split('_')[1]:
+                            elif "بن کن" in getdataVLUEs.split('_')[1]:
 
                                 print('1 it is Admin yes ban')
 
@@ -1172,11 +1188,11 @@ while 1:
 
 
 
-                        elif "وگرنه " in getdataVLUE.split('_')[1]:
+                        elif "وگرنه " in getdataVLUEs.split('_')[1]:
 
                             if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-                                if "بن نکن" in getdataVLUE.split('_')[2]:
+                                if "بن نکن" in getdataVLUEs.split('_')[2]:
 
                                     print('2 it is User no ban')
 
@@ -1184,7 +1200,7 @@ while 1:
 
 
 
-                                elif "بن کن" in getdataVLUE.split('_')[2]:
+                                elif "بن کن" in getdataVLUEs.split('_')[2]:
 
                                     print('2 it is User yes ban')
 
@@ -1204,11 +1220,11 @@ while 1:
 
 
 
-                        elif '~ادمین نبود ' in getdataVLUE.split('_')[0]:
+                        elif '~ادمین نبود ' in getdataVLUEs.split('_')[0]:
 
                             if not msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-                                if "بن نکن" in getdataVLUE.split('_')[1]:
+                                if "بن نکن" in getdataVLUEs.split('_')[1]:
 
                                     print('it is User')
 
@@ -1216,7 +1232,7 @@ while 1:
 
 
 
-                                elif "بن کن" in getdataVLUE.split('_')[1]:
+                                elif "بن کن" in getdataVLUEs.split('_')[1]:
 
                                     print('it is User')
 
@@ -1236,11 +1252,11 @@ while 1:
 
 
 
-                            elif "وگرنه " in getdataVLUE.split('_')[1]:
+                            elif "وگرنه " in getdataVLUEs.split('_')[1]:
 
                                 if msg.get("author_object_guid") in [js["member_guid"] for js in app.getGroupAdmins(Gap)["data"]["in_chat_members"]]:
 
-                                    if "بن نکن" in getdataVLUE.split('_')[2]:
+                                    if "بن نکن" in getdataVLUEs.split('_')[2]:
 
                                         print('it is User')
 
@@ -1248,7 +1264,7 @@ while 1:
 
 
 
-                                    elif "بن کن" in getdataVLUE.split('_')[2]:
+                                    elif "بن کن" in getdataVLUEs.split('_')[2]:
 
                                         print('it is User')
 
@@ -1804,9 +1820,9 @@ while 1:
 
                             ) else app.getUserInfo(GetGuid_Glass)['data']['user']['bio']
 
-                            sendmatn = loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم", name).replace("#ایدی", ide).replace("#بیو", bio).replace(
+                            sendmatn = loads(''.join(open('yad.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم", name).replace(
 
-                                "#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}")
+                                "#ایدی", ide).replace("#بیو", bio).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#ساعت", get_timer())
 
                             app.sendMessage(
 
@@ -1852,9 +1868,9 @@ while 1:
 
                                 ) else app.getUserInfo(GetGuid_Glass)['data']['user']['bio']
 
-                                sendmatn = loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم", name).replace("#ایدی", ide).replace("#بیو", bio).replace(
+                                sendmatn = loads(''.join(open('pv.json', 'r', encoding='utf-8').read())).get(msg.get('event_data').get('type')).replace("#اسم", name).replace("#ایدی", ide).replace(
 
-                                    "#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#ساعت", f"{time.localtime().tm_hour} : {time.localtime().tm_min} : {time.localtime().tm_sec}")
+                                    "#بیو", bio).replace("#گروه", app.getGroupInfo(Gap)["data"]["group"]["group_title"]).replace("#فامیلی", family).replace("#ساعت", get_timer())
 
                                 app.sendMessage(
 
